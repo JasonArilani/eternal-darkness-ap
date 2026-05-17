@@ -24,12 +24,39 @@ MEM = {
     "scrolls": 0x80331750,
 }
 
+ALIGNMENT_ROUTES = {
+    "chatturgha": {
+        "display": "Chattur'gha",
+        "weak_name": "Xel'lotath",
+        "weak_rune_item": "Xel'lotath Rune",
+        "weak_codex_item": "Xel'lotath Codex",
+        "weak_rune_bit": 0x0004,
+        "weak_codex_bit": 0x0004,
+    },
+    "ulyaoth": {
+        "display": "Ulyaoth",
+        "weak_name": "Chattur'gha",
+        "weak_rune_item": "Chattur'gha Rune",
+        "weak_codex_item": "Chattur'gha Codex",
+        "weak_rune_bit": 0x0001,
+        "weak_codex_bit": 0x0001,
+    },
+    "xelotath": {
+        "display": "Xel'lotath",
+        "weak_name": "Ulyaoth",
+        "weak_rune_item": "Ulyaoth Rune",
+        "weak_codex_item": "Ulyaoth Codex",
+        "weak_rune_bit": 0x0002,
+        "weak_codex_bit": 0x0002,
+    },
+}
+
 LOCATION_FLAGS = {
     0x01: "Anthony - 3 Point Circle",
-    0x02: "Anthony - Xel'lotath Rune",
+    0x02: "Anthony - Weak Alignment Rune",
     0x04: "Anthony - Antorbok Rune",
     0x08: "Anthony - Magormor Rune",
-    0x10: "Anthony - Xel'lotath Codex",
+    0x10: "Anthony - Weak Alignment Codex",
     0x20: "Anthony - Antorbok Codex",
     0x40: "Anthony - Magormor Codex",
     0x80: "Anthony - Enchant Item Scroll",
@@ -37,41 +64,51 @@ LOCATION_FLAGS = {
 
 LOCATIONS = [
     "Anthony - 3 Point Circle",
-    "Anthony - Xel'lotath Rune",
+    "Anthony - Weak Alignment Rune",
     "Anthony - Antorbok Rune",
     "Anthony - Magormor Rune",
-    "Anthony - Xel'lotath Codex",
+    "Anthony - Weak Alignment Codex",
     "Anthony - Antorbok Codex",
     "Anthony - Magormor Codex",
     "Anthony - Enchant Item Scroll",
 ]
 
-ITEM_POOL = [
-    "3 Point Circle",
-    "Xel'lotath Rune",
-    "Antorbok Rune",
-    "Magormor Rune",
-    "Xel'lotath Codex",
-    "Antorbok Codex",
-    "Magormor Codex",
-    "Enchant Item Scroll",
-]
+def build_item_pool(route):
+    return [
+        "3 Point Circle",
+        route["weak_rune_item"],
+        "Antorbok Rune",
+        "Magormor Rune",
+        route["weak_codex_item"],
+        "Antorbok Codex",
+        "Magormor Codex",
+        "Enchant Item Scroll",
+    ]
 
 ITEM_WRITES = {
     "3 Point Circle": ("circles", 0x0001),
+
+    "Chattur'gha Rune": ("runes", 0x0001),
+    "Ulyaoth Rune": ("runes", 0x0002),
     "Xel'lotath Rune": ("runes", 0x0004),
+
     "Antorbok Rune": ("runes", 0x0100),
     "Magormor Rune": ("runes", 0x0200),
+
+    "Chattur'gha Codex": ("codices", 0x0001),
+    "Ulyaoth Codex": ("codices", 0x0002),
     "Xel'lotath Codex": ("codices", 0x0004),
+
     "Antorbok Codex": ("codices", 0x0100),
     "Magormor Codex": ("codices", 0x0200),
+
     "Enchant Item Scroll": ("scrolls", 0x08000000),
 }
 
 
-def generate_placements(seed_text):
+def generate_placements(seed_text, item_pool):
     rng = random.Random(seed_text)
-    shuffled_items = ITEM_POOL[:]
+    shuffled_items = item_pool[:]
     rng.shuffle(shuffled_items)
     return dict(zip(LOCATIONS, shuffled_items))
 
@@ -266,13 +303,26 @@ def print_placements(seed_text, placements):
 
 
 def main():
+    route_key = input("Route alignment (chatturgha / ulyaoth / xelotath): ").strip().lower()
+
+    if route_key not in ALIGNMENT_ROUTES:
+        print("Unknown route. Defaulting to chatturgha.")
+        route_key = "chatturgha"
+    
+    route = ALIGNMENT_ROUTES[route_key]
+    
     seed_text = input("Enter seed: ").strip()
     if not seed_text:
         seed_text = "default"
-
-    placements = generate_placements(seed_text)
-    print_placements(seed_text, placements)
-
+    
+    item_pool = build_item_pool(route)
+    placements = generate_placements(seed_text, item_pool)
+    
+    print("\nRoute:", route["display"])
+    print("Weak alignment:", route["weak_name"])
+    print("Seed:", seed_text)
+    print("Placements generated. Spoiler output hidden.\n")
+    
     pm = pymem.Pymem(PROCESS_NAME)
     print("Connected to Dolphin.")
 
