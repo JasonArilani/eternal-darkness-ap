@@ -31,11 +31,13 @@ function applyAnthonyAPPreAlphaPatch(iso) {
 
   insertAPFlag(iso, 2129, 230, 1144, 5); // 3 Point Circle
 
-  addAPFlagToEnd(iso, 1362, 1145); // Xel'lotath Rune
+  addAPFlagToEnd(iso, 1360, 1145); // Weak Alignment Rune variant
+  addAPFlagToEnd(iso, 1361, 1145); // Weak Alignment Rune variant
+  addAPFlagToEnd(iso, 1362, 1145); // Weak Alignment Rune variant
   addAPFlagToEnd(iso, 1368, 1146); // Antorbok Rune
   addAPFlagToEnd(iso, 1369, 1147); // Magormor Rune
 
-  addAPFlagToEnd(iso, 1279, 1148); // Xel'lotath Codex
+  addAPFlagToEnd(iso, 1279, 1148); // Weak Alignment Codex
   insertAPFlag(iso, 347, 18, 1149, 1); // Antorbok Codex
   addAPFlagToEnd(iso, 2016, 1150); // Magormor Codex
   addAPFlagToEnd(iso, 2369, 1151); // Enchant Item Scroll
