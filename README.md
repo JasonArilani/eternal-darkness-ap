@@ -31,5 +31,5 @@ This project does not include or distribute Eternal Darkness game files. You mus
 8. Run:
 
 ```bat
-python -m pip install -r requirements.txt
-python ed_anthony_seeded_client.py
+py -m pip install -r requirements.txt
+py ed_anthony_seeded_client.py
