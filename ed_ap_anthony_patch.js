@@ -29,7 +29,7 @@ function insertAPFlag(iso, scriptId, index, flag, callArgs = 0) {
 function applyAnthonyAPPreAlphaPatch(iso) {
   console.log("Applying Eternal Darkness Anthony AP Pre-Alpha patch...");
 
-  insertAPFlag(iso, 2129, 230, 1144, 5); // 3 Point Circle
+  insertAPFlag(iso, 2129, 230, 1144, 0); // 3 Point Circle
 
   addAPFlagToEnd(iso, 1360, 1145); // Weak Alignment Rune variant
   addAPFlagToEnd(iso, 1361, 1145); // Weak Alignment Rune variant
