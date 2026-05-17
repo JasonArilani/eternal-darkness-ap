@@ -45,27 +45,6 @@ This prototype currently uses Windows process memory through `pymem`, so this ve
 
 ---
 
-# Important Alignment Requirement
-
-This Anthony pre-alpha currently only works correctly on a:
-
-```txt
-Chattur'gha alignment playthrough
-```
-
-That is because this test version expects the Anthony chapter to contain:
-
-```txt
-Xel'lotath Rune
-Xel'lotath Codex
-```
-
-Those are the Magick items present in Anthony’s chapter during the Chattur’gha alignment route.
-
-Other alignment routes are not supported by this pre-alpha yet.
-
----
-
 # Setup
 
 ## 1. Patch Your ISO
@@ -109,8 +88,8 @@ Before running the Python client:
 
 1. Open Dolphin.
 2. Load the patched Anthony pre-alpha ISO.
-3. Start or load into Anthony’s chapter.
-4. Make sure you are on a Chattur’gha alignment playthrough.
+3. Start or load into Anthony’s chapter. [Jump to Game is recommended]
+4. Choose your alignment.
 
 ---
 
@@ -142,35 +121,16 @@ The same seed should produce the same placements every time.
 
 # Playing
 
-When the client starts successfully, it will print a placement list.
+When the client starts successfully, it will print out the following.
 
 Example format:
 
 ```txt
-Seed: test123
-
-Placements:
-  Anthony - 3 Point Circle -> Magormor Codex
-  Anthony - Xel'lotath Rune -> 3 Point Circle
-  Anthony - Antorbok Rune -> Enchant Item Scroll
-  Anthony - Magormor Rune -> Xel'lotath Codex
-  Anthony - Xel'lotath Codex -> Antorbok Rune
-  Anthony - Antorbok Codex -> Xel'lotath Rune
-  Anthony - Magormor Codex -> Antorbok Codex
-  Anthony - Enchant Item Scroll -> Magormor Rune
+Route: Ulyaoth
+Weak alignment: Chattur'gha
+Seed: 1
+Placements generated. Spoiler output hidden.
 ```
-
-This means each location gives the item listed after the arrow.
-
-For example:
-
-```txt
-Anthony - Xel'lotath Rune -> 3 Point Circle
-```
-
-means that when you collect the vanilla Xel'lotath Rune location, the client will treat that as a check and grant the 3 Point Circle instead.
-
-The vanilla reward will be removed from memory, and the randomized item will be added.
 
 ---
 
@@ -180,10 +140,10 @@ There are 8 checks in this pre-alpha:
 
 ```txt
 Anthony - 3 Point Circle
-Anthony - Xel'lotath Rune
+Anthony - Weak Alignment Rune
 Anthony - Antorbok Rune
 Anthony - Magormor Rune
-Anthony - Xel'lotath Codex
+Anthony - Weak Alignment Codex
 Anthony - Antorbok Codex
 Anthony - Magormor Codex
 Anthony - Enchant Item Scroll
@@ -192,7 +152,7 @@ Anthony - Enchant Item Scroll
 When a check is detected, the client will print something like:
 
 ```txt
-CHECKED: Anthony - Xel'lotath Rune
+CHECKED: Anthony - Chattur'gha Rune
 RECEIVED: 3 Point Circle | circles 0000->0001
 ```
 
@@ -204,10 +164,10 @@ There are 8 randomized items:
 
 ```txt
 3 Point Circle
-Xel'lotath Rune
+Weak Alignment Rune
 Antorbok Rune
 Magormor Rune
-Xel'lotath Codex
+Weak Alignment Codex
 Antorbok Codex
 Magormor Codex
 Enchant Item Scroll
@@ -217,7 +177,7 @@ Progression items:
 
 ```txt
 3 Point Circle
-Xel'lotath Rune
+Weak Alignment Rune
 Antorbok Rune
 Magormor Rune
 ```
@@ -225,7 +185,7 @@ Magormor Rune
 Useful items:
 
 ```txt
-Xel'lotath Codex
+Weak Alignment Codex
 Antorbok Codex
 Magormor Codex
 Enchant Item Scroll
@@ -243,7 +203,7 @@ For Enchant Item, you need:
 
 ```txt
 3 Point Circle
-Xel'lotath Rune
+Weak Alignment Rune
 Antorbok Rune
 Magormor Rune
 ```
@@ -275,7 +235,6 @@ GOAL COMPLETE: Bishop defeated
 - This is not full Archipelago integration yet.
 - This is not the full game.
 - This only supports Anthony’s chapter.
-- This currently only supports the Chattur’gha alignment version of Anthony’s chapter.
 - Codex and scroll checks may trigger on approach rather than on actual pickup.
 - The client must stay running while playing.
 - Dolphin must be running before the client is used.
@@ -320,14 +279,6 @@ Make sure the patched ISO is loaded and Anthony’s chapter has started.
 Make sure you are using the patched ISO created by the Anthony AP patcher button.
 
 The clean vanilla ISO will not trigger the custom location flags.
-
----
-
-## Xel'lotath Rune or Xel'lotath Codex is missing
-
-Make sure you are playing the Chattur’gha alignment route.
-
-This pre-alpha expects Anthony’s chapter to contain the Xel'lotath Rune and Xel'lotath Codex.
 
 ---
 
