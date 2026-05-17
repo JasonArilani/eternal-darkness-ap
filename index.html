@@ -45,6 +45,11 @@
 		<input type="file">
     </div>
     <div id="message"></div>
+	<div id="ap_patch_controls" style="margin-top: 12px; margin-bottom: 12px;">
+  		<button id="applyAnthonyAPPatch" disabled>
+   		 Apply Anthony AP Pre-Alpha Patch
+  		</button>
+	</div>
     <div id="options">
 		You must use a USA iso and enable extended memory in Dolphin via Options -> Configuation -> Advanced -> Enable Emulated Memory Size Override. Then slide the bars all the way to the right.  <br />
 		<input type="checkbox" id="text_control"  checked="checked" />Randomize text<br />
@@ -76,7 +81,7 @@
 		var version=2;
 
 		var iso=null;
-		var manualMode=false;
+		var manualMode=true;
 		var debugMode=false;
 		var compressionBypassNeeded=false;
 		var bpeExtensionNeeded=false;
@@ -116,6 +121,7 @@
 					if(manualMode){
 						iso=niso;
 						displayMessage("Ready");
+						document.getElementById("applyAnthonyAPPatch").disabled = false;
 					}else{
 						displayMessage("Patching. This may take some time.");
 						window.setTimeout(function(){
@@ -264,7 +270,28 @@
 		function displayMessage(message){
 			document.getElementById("message").innerHTML=message;
 		}
-
+		document.getElementById("applyAnthonyAPPatch").addEventListener("click", () => {
+		  if (!iso) {
+		    alert("Load an Eternal Darkness ISO first.");
+		    return;
+		  }
+		
+		  try {
+		    displayMessage("Applying Anthony AP Pre-Alpha patch...");
+		
+		    applyAnthonyAPPreAlphaPatch(iso);
+		
+		    displayMessage("Preparing patched ISO download...");
+		
+		    download(iso, "Eternal_Darkness_AP_Anthony_PreAlpha.iso");
+		
+		    displayMessage("Anthony AP Pre-Alpha patch complete.");
+		  } catch (e) {
+		    console.error(e);
+		    alert("Patch failed. Check the browser console for details.");
+		    displayMessage("Patch failed.");
+		  }
+		});
     </script>
     <script src="./edrandom.js"></script>
     <script src="./eternaldarkness.js"></script>
