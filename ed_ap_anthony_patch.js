@@ -88,5 +88,7 @@ function applyAnthonyAPPreAlphaPatch(iso) {
   addAPFlagToEnd(iso, 1368, 1146); // Antorbok Rune
   addAPFlagToEnd(iso, 1369, 1147); // Magormor Rune
 
+  addAnthonyGenericPickupAPFlags(iso); // Codices + Enchant Item Scroll pickup checks
+
   console.log("Anthony AP Pre-Alpha patch complete.");
 }
