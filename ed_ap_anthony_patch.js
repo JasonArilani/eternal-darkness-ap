@@ -26,6 +26,59 @@ function insertAPFlag(iso, scriptId, index, flag, callArgs = 0) {
   });
 }
 
+function addAPFlagWhenPickupModel(code, model, flag) {
+  code.push(["GETLOCAL", 1]);
+  code.push(["PUSHINT", model]);
+
+  // If picked-up model does not match, skip this flag block.
+  code.push(["JMPNE", 5]);
+
+  code.push(["GETGLOBAL", "fn29"]);
+  code.push(["PUSHINT", flag]);
+  code.push(["PUSHINT", 1]);
+  code.push(["CALL", 0, 0]);
+
+  code.push("REJOIN");
+}
+
+function addAnthonyGenericPickupAPFlags(iso) {
+  const code = [];
+
+  // Anthony - Weak Alignment Codex
+  // Chattur'gha route weak codex = Xel'lotath Codex model 255
+  // Ulyaoth route weak codex = Chattur'gha Codex model 245
+  // Xel'lotath route weak codex = Ulyaoth Codex model 254
+  addAPFlagWhenPickupModel(code, 255, 1148);
+  addAPFlagWhenPickupModel(code, 245, 1148);
+  addAPFlagWhenPickupModel(code, 254, 1148);
+
+  // Anthony - Antorbok Codex
+  addAPFlagWhenPickupModel(code, 242, 1149);
+
+  // Anthony - Magormor Codex
+  addAPFlagWhenPickupModel(code, 246, 1150);
+
+  // Anthony - Enchant Item Scroll
+  addAPFlagWhenPickupModel(code, 0x20, 1151);
+
+  // Patch the same generic magic pickup handlers edrandomizer patches.
+  modifyScript(iso, 1985, s => {
+    s.addJmpPatch(6, 9, code);
+  });
+
+  modifyScript(iso, 2022, s => {
+    s.addJmpPatch(6, 10, code);
+  });
+
+  modifyScript(iso, 402, s => {
+    s.addJmpPatch(6, 10, code);
+  });
+
+  modifyScript(iso, 451, s => {
+    s.addJmpPatch(6, 10, code);
+  });
+}
+
 function applyAnthonyAPPreAlphaPatch(iso) {
   console.log("Applying Eternal Darkness Anthony AP Pre-Alpha patch...");
   
@@ -34,11 +87,6 @@ function applyAnthonyAPPreAlphaPatch(iso) {
   addAPFlagToEnd(iso, 1362, 1145); // Weak Alignment Rune variant
   addAPFlagToEnd(iso, 1368, 1146); // Antorbok Rune
   addAPFlagToEnd(iso, 1369, 1147); // Magormor Rune
-
-  addAPFlagToEnd(iso, 1279, 1148); // Weak Alignment Codex
-  insertAPFlag(iso, 347, 18, 1149, 1); // Antorbok Codex
-  addAPFlagToEnd(iso, 2016, 1150); // Magormor Codex
-  addAPFlagToEnd(iso, 2369, 1151); // Enchant Item Scroll
 
   console.log("Anthony AP Pre-Alpha patch complete.");
 }
